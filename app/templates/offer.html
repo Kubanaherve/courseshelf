@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Offer a book · CourseShelf{% endblock %}
+{% block body %}
+<h1>Offer a book</h1>
+<p class="lede">I look up the ISBN printed in the book. When Open Library has no record, I type the title, author, and edition myself. I never guess the edition from the title.</p>
+
+{% if errors.lookup %}
+<p class="flash flash-error" role="alert" id="lookup-error">{{ errors.lookup }}</p>
+{% endif %}
+
+<form class="stack" method="post" action="{{ url_for('offer_submit') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf }}">
+  <div>
+    <label for="isbn">ISBN</label>
+    <input id="isbn" name="isbn" inputmode="numeric" autocomplete="off" required value="{{ form.isbn }}" {% if errors.isbn %}aria-invalid="true" aria-describedby="isbn-error"{% endif %}>
+    {% if errors.isbn %}<p class="field-error" id="isbn-error">{{ errors.isbn }}</p>{% endif %}
+  </div>
+  <div class="row-actions">
+    <button type="submit" name="action" value="lookup" formnovalidate>Look up this ISBN</button>
+  </div>
+  <div>
+    <label for="title">Title</label>
+    <input id="title" name="title" required value="{{ form.title }}" {% if errors.title %}aria-invalid="true" aria-describedby="title-error"{% endif %}>
+    {% if errors.title %}<p class="field-error" id="title-error">{{ errors.title }}</p>{% endif %}
+  </div>
+  <div>
+    <label for="authors">Author</label>
+    <input id="authors" name="authors" required value="{{ form.authors }}" {% if errors.authors %}aria-invalid="true" aria-describedby="authors-error"{% endif %}>
+    {% if errors.authors %}<p class="field-error" id="authors-error">{{ errors.authors }}</p>{% endif %}
+  </div>
+  <div>
+    <label for="edition_label">Edition</label>
+    <input id="edition_label" name="edition_label" value="{{ form.edition_label }}" {% if errors.edition_label %}aria-invalid="true" aria-describedby="edition-error"{% endif %}>
+    <p class="hint" id="edition-hint">Leave this blank when neither the book nor Open Library states an edition. It will show as “Edition not stated”.</p>
+    {% if errors.edition_label %}<p class="field-error" id="edition-error">{{ errors.edition_label }}</p>{% endif %}
+  </div>
+  {% if form.publish_date %}
+  <p class="hint">Open Library publish date: {{ form.publish_date }}</p>
+  {% endif %}
+  <div class="offer-preview">
+    <div class="cover">
+      {% if form.cover_url %}
+      <img class="cover-img" src="{{ form.cover_url }}" alt="">
+      <span class="cover-fallback" hidden>No cover</span>
+      {% else %}
+      <span class="cover-fallback">No cover</span>
+      {% endif %}
+    </div>
+    <p class="hint">A cover is shown only when Open Library provides one. Otherwise the fallback above stays.</p>
+  </div>
+  <div>
+    <label for="course_code">Course</label>
+    <select id="course_code" name="course_code" required {% if errors.course_code %}aria-invalid="true" aria-describedby="course-error"{% endif %}>
+      <option value="">Choose a demonstration course</option>
+      {% for code, name in courses %}
+      <option value="{{ code }}" {% if form.course_code == code %}selected{% endif %}>{{ code }} · {{ name }}</option>
+      {% endfor %}
+    </select>
+    {% if errors.course_code %}<p class="field-error" id="course-error">{{ errors.course_code }}</p>{% endif %}
+  </div>
+  <div>
+    <label for="pickup_landmark">Pickup landmark</label>
+    <select id="pickup_landmark" name="pickup_landmark" required {% if errors.pickup_landmark %}aria-invalid="true" aria-describedby="landmark-error"{% endif %}>
+      <option value="">Choose a demonstration landmark</option>
+      {% for landmark in landmarks %}
+      <option value="{{ landmark }}" {% if form.pickup_landmark == landmark %}selected{% endif %}>{{ landmark }}</option>
+      {% endfor %}
+    </select>
+    {% if errors.pickup_landmark %}<p class="field-error" id="landmark-error">{{ errors.pickup_landmark }}</p>{% endif %}
+  </div>
+  <div>
+    <label for="note">Note for the borrower</label>
+    <textarea id="note" name="note" maxlength="280" rows="3">{{ form.note }}</textarea>
+    {% if errors.note %}<p class="field-error" id="note-error">{{ errors.note }}</p>{% endif %}
+  </div>
+  <div class="row-actions">
+    <button type="submit" name="action" value="publish">Publish this copy</button>
+  </div>
+</form>
+{% endblock %}

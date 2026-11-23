@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Log in · CourseShelf{% endblock %}
+{% block body %}
+<h1>Log in</h1>
+<p class="lede">I created two accounts for this demonstration. There is no ALU sign-on. I keep the password in my README, not on this page.</p>
+{% if error %}
+<p class="flash flash-error" role="alert" id="login-error"><{ error }}</p>
+{% endif %}
+<form class="stack narrow" method="post" action="{{ url_for('login') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf }}">
+  <input type="hidden" name="next" value="{{ next_path }}">
+  <div>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="username" required value="{{ email }}" {% if error %}aria-invalid="true" aria-describedby="login-error"{% endif %}>
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required {% if error %}aria-invalid="true" aria-describedby="login-error"{% endif %}>
+  </div>
+  <button type="submit">Log in</button>
+</form>
+<section class="account-card">
+  <h2>My demonstration accounts</h2>
+  <ul>
+    <li><span class="isbn">amina.demo@courseshelf.example</span> — demonstration lender</li>
+    <li><span class="isbn">jean.demo@courseshelf.example</span> — demonstration borrower</li>
+  </ul>
+  <p class="hint">I do not store the password on this page. I wrote it in my README.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Course shelf · CourseShelf{% endblock %}
+{% block body %}
+<h1>Course shelf</h1>
+<p class="lede">Can I borrow this exact edition before my next tutorial, and where do I collect it?</p>
+
+<form class="filters" method="get" action="{{ url_for('shelf') }}">
+  <div>
+    <label for="q">Search by title, author, note, or ISBN</label>
+    <input id="q" name="q" type="search" value="{{ query }}" autocomplete="off">
+  </div>
+  <div>
+    <label for="course">Course</label>
+    <select id="course" name="course">
+      <option value="">Any demonstration course</option>
+      {% for code, name in courses %}
+      <option value="{{ code }}" {% if course == code %}selected{% endif %}>{{ code }} · {{ name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="availability">Availability</label>
+    <select id="availability" name="availability">
+      {% for value, label in availability_options %}
+      <option value="{{ value }}" {% if availability == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="sort">Sort</label>
+    <select id="sort" name="sort">
+      {% for value, label in sort_options %}
+      <option value="{{ value }}" {% if sort == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="filter-actions">
+    <button type="submit">Apply</button>
+    <a class="text-button" href="{{ url_for('shelf') }}">Clear</a>
+  </div>
+</form>
+
+{% if copies %}
+<ul class="shelf">
+  {% for copy in copies %}
+  <li>
+    <article class="copy">
+      <div class="cover">
+        {% if copy.cover_url %}
+        <img class="cover-img" src="{{ copy.cover_url }}" alt="">
+        <span class="cover-fallback" hidden>No cover</span>
+        {% else %}
+        <span class="cover-fallback">No cover</span>
+        {% endif %}
+      </div>
+      <div>
+        <h2>{{ copy.title }}</h2>
+        <p class="authors">{{ copy.authors or "Author not listed" }}</p>
+        <dl class="facts">
+          <div><dt>ISBN</dt><dd><span class="isbn">{{ copy.isbn13 }}</span></dd></div>
+          <div><dt>Edition</dt><dd>{{ copy.edition_label or "Edition not stated" }}</dd></div>
+          <div><dt>Course</dt><dd>{{ copy.course_code }} · {{ copy.course_name }}</dd></div>
+          <div><dt>Pickup</dt><dd>{{ copy.pickup_landmark }}</dd></div>
+          <div><dt>Availability</dt><dd><span class="status status-{{ copy.status }}">{{ copy.status_label }}</span></dd></div>
+          <div><dt>Return by</dt><dd>{% if copy.return_by %}{{ copy.return_by|shortdate }}{% else %}Not on loan{% endif %}</dd></div>
+          <div><dt>Offered by</dt><dd>{{ copy.owner_name }}</dd></div>
+        </dl>
+        {% if copy.note %}<p class="note">{{ copy.note }}</p>{% endif %}
+        {% if copy.status == 'available' %}
+          {% if not student %}
+          <p><a href="{{ url_for('login', next=request.path) }}">Log in to reserve this copy</a></p>
+          {% elif student.id == copy.owner_id %}
+          <p class="hint">This is your copy. Another student can reserve it.</p>
+          {% else %}
+          <form class="reserve" method="post" action="{{ url_for('reserve') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf }}">
+            <input type="hidden" name="copy_id" value="{{ copy.id }}">
+            <div>
+              <label for="return-{{ copy.id }}">Return by</label>
+              <input id="return-{{ copy.id }}" name="return_by" type="date" required value="{{ default_return }}" min="{{ min_return }}" max="{{ max_return }}">
+            </div>
+            <button type="submit">Reserve this copy</button>
+          </form>
+          {% endif %}
+        {% endif %}
+      </div>
+    </article>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<div class="empty">
+  <h2>No copies match</h2>
+  <p>Nothing on the shelf matches this course, availability, and search. Clear the filters, or offer a book you can lend before a tutorial.</p>
+  <p>
+    <a class="button-link" href="{{ url_for('shelf') }}">Clear filters</a>
+    <a class="button-link" href="{{ url_for('offer') }}">Offer a book</a>
+  </p>
+</div>
+{% endif %}
+{% endblock %}
