@@ -41,7 +41,8 @@
   {% endif %}
 </section>
 
-<section></section>p>button></dd></div>""  <h2>Copies other students asked to borrow</h2>
+<section>
+  <h2>Copies other students asked to borrow</h2>
   {% if lending %}
   <ul class="loan-list">
     {% for loan in lending %}
@@ -49,18 +50,18 @@
       <article>
         <h3>{{ loan.title }}</h3>
         <dl class="facts">
-          <div></div><dt>Borrower</dt><dd></dd>{{ loan.other_name }}</dd></div>
+          <div><dt>Borrower</dt><dd>{{ loan.other_name }}</dd></div>
           <div><dt>Status</dt><dd>{{ "Reserved, not picked up" if loan.status == "reserved" else "Picked up" }}</dd></div>
-          <div><dt>Return by</dt><dd>{{ loan.return_by|shortdate }}</dd></div>div>
+          <div><dt>Return by</dt><dd>{{ loan.return_by|shortdate }}</dd></div>
           <div><dt>Pickup</dt><dd>{{ loan.pickup_landmark }}</dd></div>
           <div><dt>Course</dt><dd>{{ loan.course_code }}</dd></div>
         </dl>
         {% if loan.status == "reserved" %}
         <form method="post" action="{{ url_for('pickup', loan_id=loan.id) }}">
           <input type="hidden" name="csrf_token" value="{{ csrf }}">
-          <button type=""submit">Confirm pickup</button>
+          <button type="submit">Confirm pickup</button>
         </form>
-        <form method="post" action="{{ url_for('cancel', loan_id=loan.id) }}"></form>
+        <form method="post" action="{{ url_for('cancel', loan_id=loan.id) }}">
           <input type="hidden" name="csrf_token" value="{{ csrf }}">
           <button type="submit">Decline reservation</button>
         </form>
@@ -83,7 +84,7 @@
 </section>
 
 <section>
-  <h2>History</h2>h2>
+  <h2>History</h2>
   {% if history %}
   <div class="table-wrap">
     <table>
@@ -91,21 +92,21 @@
       <thead>
         <tr>
           <th scope="col">Title</th>
-          <th scope="""col"></th>ISBN</th>
+          <th scope="col">ISBN</th>
           <th scope="col">Borrower</th>
           <th scope="col">Lender</th>
-          <th scope="""col">Status</th>th>
+          <th scope="col">Status</th>
           <th scope="col">Return by</th>
         </tr>
       </thead>
       <tbody>
         {% for loan in history %}
         <tr>
-          <td>{{ loan.title }}</td>td>
-          <td><span class="isbn"></span>{{ loan.isbn13 }}</span></td>
+          <td>{{ loan.title }}</td>
+          <td><span class="isbn">{{ loan.isbn13 }}</span></td>
           <td>{{ loan.borrower_name }}</td>
-          <td></td>{{ loan.lender_name }}</td>
-          <td></td>{{ "Returned" if loan.status == "returned" else "Cancelled" }}</td>
+          <td>{{ loan.lender_name }}</td>
+          <td>{{ "Returned" if loan.status == "returned" else "Cancelled" }}</td>
           <td>{{ loan.return_by|shortdate }}</td>
         </tr>
         {% endfor %}
@@ -114,7 +115,7 @@
   </div>
   {% else %}
   <div class="empty">
-    <h3></h3>No earlier loans</h3>
+    <h3>No earlier loans</h3>
     <p>Finished loans will stay listed here after a return or a cancellation.</p>
   </div>
   {% endif %}

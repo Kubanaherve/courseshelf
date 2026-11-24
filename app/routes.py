@@ -261,7 +261,6 @@ def register_routes(app):
         }
         return body, 200 if database == "ok" else 503
 
-
 def _empty_offer():
     return {
         "isbn": "",

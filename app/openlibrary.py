@@ -17,6 +17,7 @@ from dataclasses import dataclass, field
 
 from app.core import connection
 
+
 API_URL = "https://openlibrary.org/api/books"
 DEFAULT_USER_AGENT = (
     "CourseShelf/1.0 "

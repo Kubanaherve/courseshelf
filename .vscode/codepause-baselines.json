@@ -5,7 +5,7 @@
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/.gitignore": 13,
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/migrations/001_schema.sql": 0,
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/__init__.py": 0,
-  "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/core.py": 225,
+  "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/core.py": 262,
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/openLibrary.py": 0,
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/loans.py": 0,
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/routes.py": 0,
@@ -20,6 +20,5 @@
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/scripts/seed.py": 0,
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/.vscode/settings.json": 3,
   "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/openlibrary.py": 225,
-  "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/newfile": 5152,
-  "/Users/friendkh/Class_Activities/Web-Inf_ALU/Summative/courseshelf/app/newline": 0
+  "/Users/friendkh/Library/Application Support/Code/User/settings.json": 56
 }
