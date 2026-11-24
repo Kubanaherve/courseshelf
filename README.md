@@ -33,7 +33,7 @@ I created two accounts with the seed. I use the same password for both. I also p
 | Lender | Amina Niyonsenga | amina.demo@courseshelf.example |
 | Borrower | Jean Habimana | jean.demo@courseshelf.example |
 
-Password: DEMO_PASSWORD_HERE
+Password: shelf-demo-pass-2026
 
 There is no public registration page. I do not store this password on the login page.
 
@@ -196,7 +196,7 @@ scripts/seed.py             demonstration accounts and copies
 
 ## Problems I solved
 
-Open Library’s documentation page timed out, so I mapped the fields from a real Books API response. I use port 5050 because macOS often holds port 5000. The course containers do not include PostgreSQL, so the database runs on my Mac. Let's Encrypt cannot see `127.0.0.1`, so I keep the lab certificate.
+Open Library’s documentation page timed out, so I mapped the fields from a real Books API response. I use port 5050 because macOS often holds port 5000. The course containers do not include PostgreSQL, so the database runs on my Mac. Let's Encryp cannot see `127.0.0.1`, so I keep the lab certificate.
 
 ## Credit
 
