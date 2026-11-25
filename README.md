@@ -9,7 +9,7 @@ This is my demonstration. It is not an official ALU service, and it does not use
 ## Links for this assignment
 
 - My public GitHub repository: https://github.com/Kubanaherve/courseshelf
-- My demo video, 2 minutes or less: VIDEO_URL
+- My demo video, 1 minute 33 sec: https://youtu.be/7UayIWqzfRE?si=a8MImJ7oan8qmen-
 - My local shelf: http://127.0.0.1:5050/
 - web-01 in the lab: http://127.0.0.1:8080/
 - web-02 in the lab: http://127.0.0.1:8081/
@@ -187,15 +187,15 @@ I need Python 3.12 or newer, PostgreSQL 16, and a browser. I developed on Python
 
 From the repository root:
 
-```bash
-git clone https://github.com/Kubanaherve/courseshelf.git
-cd courseshelf
-bash scripts/setup.sh
-export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-createdb courseshelf || true
-.venv/bin/python scripts/migrate.py
-.venv/bin/python scripts/seed.py
-```
+   ```bash
+   git clone https://github.com/Kubanaherve/courseshelf.git
+   cd courseshelf
+   bash scripts/setup.sh
+   export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+   createdb courseshelf || true
+   .venv/bin/python scripts/migrate.py
+   .venv/bin/python scripts/seed.py
+   ```
 
 `scripts/setup.sh` creates `.venv`, installs `requirements.txt`, and copies `.env.example` to `.env` only when `.env` does not already exist. I then put two values into `.env`.
 
@@ -207,10 +207,10 @@ That command prints the 64-character hex value I put in `SECRET_KEY`. I set `DEM
 
 I start the shelf and I leave the Terminal window open:
 
-```bash
+   ```bash
 export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
-.venv/bin/flask --app wsgi run --host 127.0.0.1 --port 5050
-```
+   .venv/bin/flask --app wsgi run --host 127.0.0.1 --port 5050
+   ```
 
 I open http://127.0.0.1:5050/. If the port is already in use, the shelf is already running.
 
